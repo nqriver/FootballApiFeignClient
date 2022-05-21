@@ -6,10 +6,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class FlashScoreFeignClientApplication {
+public class FootballApiClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FlashScoreFeignClientApplication.class, args);
+        SpringApplication.run(FootballApiClientApplication.class, args);
     }
 
 }

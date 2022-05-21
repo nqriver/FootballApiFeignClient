@@ -3,40 +3,29 @@ package pl.nqriver.feignclient.flashscorefeignclient.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.nqriver.feignclient.flashscorefeignclient.client.FlashScoreClient;
-import pl.nqriver.feignclient.flashscorefeignclient.client.dtos.EventDto;
-import pl.nqriver.feignclient.flashscorefeignclient.client.dtos.EventsDto;
-
-import java.util.HashSet;
-import java.util.Set;
+import pl.nqriver.feignclient.flashscorefeignclient.client.FootballApiClient;
+import pl.nqriver.feignclient.flashscorefeignclient.config.FootballApiCredentials;
 
 @RestController()
 public class TeamController {
 
-    private final FlashScoreClient flashScoreClient;
+    private final FootballApiClient flashScoreClient;
+    private final FootballApiCredentials footballApiCredentials;
 
-    public TeamController(FlashScoreClient flashScoreClient) {
+
+
+    public TeamController(FootballApiClient flashScoreClient, FootballApiCredentials footballApiCredentials) {
         this.flashScoreClient = flashScoreClient;
+        this.footballApiCredentials = footballApiCredentials;
     }
+
 
     @GetMapping("/matches")
-    public ResponseEntity<EventsDto> getMatches() {
+    public ResponseEntity<Object> getForm() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-RapidAPI-Host", "flashscore.p.rapidapi.com");
-        headers.add("X-RapidAPI-Key", "004e02d551msh4cca862ec76a736p15fe9cjsndb0337a1863f");
-        return ResponseEntity.ok().body(flashScoreClient.getMatches(headers));
-    }
-
-    @GetMapping("/events")
-    public EventsDto getSampleEvents() {
-        EventsDto eventsDto = new EventsDto();
-        HashSet<EventDto> events = new HashSet<>(Set.of(
-                new EventDto("asd"),
-                new EventDto("aaad")
-        ));
-        eventsDto.setEvents(events);
-        return eventsDto;
+        headers.add("X-RapidAPI-Host", footballApiCredentials.getHost());
+        headers.add("X-RapidAPI-Key", footballApiCredentials.getKey());
+        return ResponseEntity.ok().body(flashScoreClient.getMatches(headers, 39, 2021, 33));
     }
 }

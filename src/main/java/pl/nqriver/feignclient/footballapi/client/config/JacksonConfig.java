@@ -1,4 +1,4 @@
-package pl.nqriver.feignclient.flashscorefeignclient.config;
+package pl.nqriver.feignclient.footballapi.client.config;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.context.annotation.Bean;

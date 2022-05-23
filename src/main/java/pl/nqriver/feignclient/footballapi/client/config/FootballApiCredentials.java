@@ -1,4 +1,4 @@
-package pl.nqriver.feignclient.flashscorefeignclient.config;
+package pl.nqriver.feignclient.footballapi.client.config;
 
 import lombok.Getter;
 import lombok.Setter;

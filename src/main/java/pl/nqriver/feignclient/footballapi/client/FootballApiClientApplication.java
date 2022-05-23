@@ -1,4 +1,4 @@
-package pl.nqriver.feignclient.flashscorefeignclient;
+package pl.nqriver.feignclient.footballapi.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

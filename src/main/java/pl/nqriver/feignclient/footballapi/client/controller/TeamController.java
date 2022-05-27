@@ -21,8 +21,13 @@ public class TeamController {
 
 
     @GetMapping("/team/statistics")
-    public ResponseEntity<Object> getForm() {
-        return ResponseEntity.ok().body(footballApiClient.getMatches(1, 2021, 33));
+    public ResponseEntity<Object> getForm(
+            @RequestParam("league") Integer leagueId,
+            @RequestParam("seasonYear") Optional<Year> seasonYear,
+            @RequestParam("team") Integer teamId
+    ) {
+        var year = seasonYear.orElse(getCurrentSeasonYear());
+        return ResponseEntity.ok().body(footballApiClient.getMatches(leagueId, year, teamId));
     }
 
     @GetMapping("/teams")

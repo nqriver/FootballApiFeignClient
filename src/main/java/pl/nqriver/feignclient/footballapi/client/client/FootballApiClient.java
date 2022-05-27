@@ -20,7 +20,7 @@ public interface FootballApiClient {
             produces = MediaType.APPLICATION_JSON_VALUE)
     TeamForm getMatches(
             @RequestParam("league") Integer leagueId,
-            @RequestParam("season") Integer seasonId,
+            @RequestParam("season") Year seasonYear,
             @RequestParam("team") Integer teamId
     );
 

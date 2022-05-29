@@ -2,6 +2,7 @@ package pl.nqriver.feignclient.footballapi.client.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.nqriver.feignclient.footballapi.client.client.FootballApiClient;
@@ -20,12 +21,12 @@ public class TeamController {
     }
 
 
-    @GetMapping("/team/statistics")
+    @GetMapping("/teams/{teamId}/statistics")
     public ResponseEntity<Object> getForm(
             @RequestParam("league") Integer leagueId,
             @RequestParam("seasonYear") Optional<Year> seasonYear,
-            @RequestParam("team") Integer teamId
-    ) {
+            @PathVariable Integer teamId)
+    {
         var year = seasonYear.orElse(getCurrentSeasonYear());
         return ResponseEntity.ok().body(footballApiClient.getMatches(leagueId, year, teamId));
     }
@@ -38,11 +39,10 @@ public class TeamController {
         return ResponseEntity.ok().body(footballApiClient.getTeam(teamId, teamName));
     }
 
-    @GetMapping("league/teams")
+    @GetMapping("/leagues/{leagueId}/teams")
     public ResponseEntity<Object> getTeamsByLeague(
-            @RequestParam(value = "league") Integer leagueId,
-            @RequestParam(value = "season") Optional<Year> seasonYear
-    )
+            @RequestParam(value = "season") Optional<Year> seasonYear,
+            @PathVariable Integer leagueId)
     {
         var year = seasonYear.orElse(getCurrentSeasonYear());
         return ResponseEntity.ok().body(footballApiClient.getTeamsByLeague(leagueId, year));

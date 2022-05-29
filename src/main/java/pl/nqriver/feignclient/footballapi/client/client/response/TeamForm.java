@@ -12,7 +12,7 @@ import java.time.Year;
 @Data
 @Builder
 public class TeamForm {
-    Year year;
+    Year season;
     Team team;
     Fixtures fixtures;
     String form;

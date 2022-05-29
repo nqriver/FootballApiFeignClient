@@ -1,5 +1,6 @@
 package pl.nqriver.feignclient.footballapi.client.client.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Data;
@@ -12,4 +13,7 @@ public class Team {
     Long id;
     String name;
     String country;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    String league;
 }

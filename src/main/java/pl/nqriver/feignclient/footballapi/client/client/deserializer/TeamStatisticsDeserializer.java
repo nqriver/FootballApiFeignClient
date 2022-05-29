@@ -12,6 +12,7 @@ import pl.nqriver.feignclient.footballapi.client.client.response.Team;
 import pl.nqriver.feignclient.footballapi.client.client.response.TeamForm;
 
 import java.io.IOException;
+import java.time.Year;
 
 @JsonComponent
 public class TeamStatisticsDeserializer extends JsonDeserializer<TeamForm> {
@@ -21,6 +22,8 @@ public class TeamStatisticsDeserializer extends JsonDeserializer<TeamForm> {
         JsonNode jsonNode = codec.readTree(jsonParser);
         JsonNode response = jsonNode.get("response");
 
+        Year season = Year.of(response.get("league").get("season").asInt());
+
         String form = response.get("form").textValue();
         Team team = getTeam(response);
         Fixtures fixtures = getFixtures(response);
@@ -28,6 +31,7 @@ public class TeamStatisticsDeserializer extends JsonDeserializer<TeamForm> {
         return TeamForm.builder()
                 .fixtures(fixtures)
                 .team(team)
+                .season(season)
                 .form(form)
                 .build();
     }
@@ -48,12 +52,18 @@ public class TeamStatisticsDeserializer extends JsonDeserializer<TeamForm> {
     }
 
     private Team getTeam(JsonNode response) {
+        JsonNode leagueNode = response.get("league");
+        String country = leagueNode.get("country").asText();
+        String league = leagueNode.get("name").asText();
+
         JsonNode teamNode = response.get("team");
         Long teamId = teamNode.get("id").asLong();
         String teamName = teamNode.get("name").asText();
         return Team.builder()
                 .id(teamId)
                 .name(teamName)
+                .league(league)
+                .country(country)
                 .build();
     }
 }
